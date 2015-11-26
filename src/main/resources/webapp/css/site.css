@@ -1,0 +1,171 @@
+/* -------------------------- */
+/* -----	MAIN CSS	----- */
+/* -------------------------- */
+textarea {
+    resize: none;
+	width: 100%;
+}
+li {
+    cursor: pointer;
+}
+.glyphicon-button {
+    margin-left: 5px;
+}
+/* -------------------------- */
+/* -----	index.html	----- */
+/* -------------------------- */
+#pipeline-panel {
+	width: 250px;
+	position: absolute;
+	top: 70px;
+	bottom: 95px;
+	left: 15px;
+	background-color: #fafafa;
+	margin-bottom: 0px;
+}
+#add-btn {
+	width: 250px;
+	position: absolute;
+	bottom: 55px;
+	left: 15px;
+}
+#edit-btn {
+	width: 122px;
+	position: absolute;
+	bottom: 15px;
+	left: 15px;
+}
+#delete-btn {
+	width: 122px;
+	position: absolute;
+	bottom: 15px;
+	left: 143px;
+}
+#transformer-panel {
+	position: absolute;	
+	top: 70px;
+	bottom: 15px;
+	right: 15px;
+	left: 275px;
+	background-color: #fafafa;
+	margin-bottom: 0px;
+}
+#pipeline-panel-body {
+	padding: 0;
+	overflow-y: auto;
+}
+#transformer-panel-body {
+	padding: 0;
+	overflow-y: auto;
+}
+#transformer-panel-table {
+	background-color: #ffffff;
+}
+#transformer-panel-table td {
+	font-size: 0.90em;
+}
+/* ---------------------------------- */
+/* -----	index.html (popup)	----- */
+/* ---------------------------------- */
+#addDialog {
+	overflow-x: hidden;
+	overflow-y: hidden;
+	display: none;
+}
+#head-panel {
+	padding: 10px;
+	background-color: #fafafa;
+}
+#available-transformers-panel {
+	margin-bottom: 0;
+	width: 475px;
+}
+#transformers-added-panel {
+	margin-bottom: 0;
+	width: 476px;
+}
+#available-transformers-panel-body {
+	padding: 0;
+	background-color: #fafafa;
+	background-image: url('../images/fusepoolCube128.png');
+	background-repeat: no-repeat;
+        background-position: center; 
+}
+#transformers-added-panel-body {
+	padding: 0;
+	background-color: #fafafa;
+	background-image: url('../images/fusepoolCube128.png');
+	background-repeat: no-repeat;
+        background-position: center; 
+}
+#draggables {
+	margin: 0;
+	padding: 0;
+	height:400px;
+	width: 474px;
+	overflow-y: auto;
+}
+#sortable {
+	margin: 0;
+	padding: 0;
+	height:400px;
+	width: 474px;
+	overflow-y: auto;
+}
+#draggables  li{
+	width: 100%;
+	cursor: move;
+	background: rgba(255, 255, 255, 0.8);
+}
+#sortable li  {
+	cursor: move;
+	background: rgba(255, 255, 255, 0.8);
+}
+/* -------------------------- */
+/* -----	test.html	----- */
+/* -------------------------- */
+#test-panel {
+	min-height: 300px;
+	position: absolute;
+	top: 70px;
+	bottom: 0px;
+	left: 15px;
+	right: 15px;
+}
+#result-box {
+	margin-bottom: 0;
+	overflow-y: auto;
+	position: absolute;
+	top: 130px;
+	left: 15px;
+	right: 15px;
+	bottom: 15px;
+}
+#file-path {
+	cursor: pointer;
+}
+#file {
+	visibility:hidden;
+}
+/* -------------------------- */
+/* -----	about.html	----- */
+/* -------------------------- */
+#about {
+	margin: 30px;
+}
+
+
+/*-- from gui -- */
+
+img#logo {
+    float: right;
+    margin: 10px 0px;
+    width: 150px;
+}
+
+
+#main{
+	margin-top: 30px;
+}
+
+
