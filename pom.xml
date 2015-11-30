@@ -3,6 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>eu.fusepool.p3</groupId>
     <artifactId>p3-literal-extraction-transformer-factory-gui</artifactId>
+    <name>Fusepool P3 Platform: Literal Extraction Transformer Factory GUI</name>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     
@@ -43,7 +44,7 @@
                     <mainClass>${main.class}</mainClass>
                     <arguments>
                         <argument>-P</argument>
-                        <argument>8202</argument>
+                        <argument>8206</argument>
                     </arguments>
                 </configuration>
             </plugin>
@@ -83,30 +84,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-server</artifactId>
-            <version>${jersey-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-json</artifactId>
-            <version>${jersey-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-client</artifactId>
-            <version>${jersey-version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.wymiwyg</groupId>
             <artifactId>wymiwyg-commons-core</artifactId>
             <version>0.8</version>
-        </dependency>
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20140107</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -123,12 +103,6 @@
             <artifactId>junit</artifactId>
             <version>4.8.2</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
-            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>

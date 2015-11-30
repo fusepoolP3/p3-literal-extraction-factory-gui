@@ -15,7 +15,6 @@
     </head>
 
     <body role="document">  
-
         <div class="container theme-showcase">
             <a href="http://p3.fusepool.eu" target="_blank">
                 <img src="images/fusepool.png" title="Fusepool P3" alt="Fusepool P3" id="logo" />
@@ -23,191 +22,222 @@
         </div>
         <div id="main" class="container theme-showcase well">
             <div class="form-horizontal" role="form">
-            <div class="form-group">
-                <label for="transformer" class="col-sm-2 control-label">
-                    Plain Text Transformer:
-                </label>
-                <div class="col-sm-10"><input type="text" class="form-control" name="transformer" id="transformer" size="80" value="http://" /><br/>
-                    <span style="color: grey">(e.g. https://raw.githubusercontent.com/fusepoolP3/p3-dictionary-matcher-transformer/master/src/main/resources/NASA.subjects.skos.xml)</span></div>
-                <!-- TODO - the best would be an UI element that allows to select a transformer accepting text/plain and outputting any RDF format -->
-                <!-- TODO: add description: This is the transformer the text extracted from the configured literal predicates is sent to. 
-                     It needs to support <code>text/plain</code> as input and return Fusepool Annotation Model RDF statements as output. 
-                 -->
-            </div>
-            <div class="form-group">
-                <label for="lang" class="col-sm-2 control-label">
-                    Processed Languages:
-                </label>
-                <div class="col-sm-10 "><input type="text" class="form-control"  id="lang" name="lang" size="80"/></div>
-                <!-- TODO: one needs 
-                        1. check if this is empty (or blank) if so do not send a lang parameter
-                        2. split values by ','. If multiple languages are defined add &lang={lang1}&lang={lang2} ... 
-                 -->
-                <!-- TODO: add description: comma separated list of processed languages. If empty all languages will be processed. 
-                 Lanugages without any language tag will always be processed.-->
-            </div>
-            <div class="form-group">
-              <label for="lit-pred" class="col-sm-2 control-label">
-                Literal Properties:
-              </label>
-              <div class="col-sm-10 "><input type="text" class="form-control"  id="lit-pred" name="lit-pred" size="80"/></div>
-              <!-- TODO:
-               1. change this to a <textarea/>
-               2. split the value by line break
-               3. validate that every line is a valid URI
-               4. send URL as &lit-pred={uri1}&lit-pred={uri2}& ... to the server
-               5. this is an optional configuration. So if the field is empty or blang do not add a lit-pred value
-               -->
-              <!-- TODO: add description: Properties searched for literal values. The Transformer will concatenate literals values 
-                of all configured properties per languages (meaning that only literals with the same language will be concatenated).
-               -->
-            </div>
-            <div class="form-group">
-              <label for="entity-pred" class="col-sm-2 control-label">
-                Entity Property:
-              </label>
-              <div class="col-sm-10 "><input type="text" class="form-control"  id="entity-pred" name="entity-pred" size="80"/></div>
-              <!-- TODO:
-               1. optional single value &entity-pred={uri} if present
-               -->
-              <!-- TODO: add description: The property used for Linked Entities. If empty
-                  <code>fam:entity-reference</code> will be used.
-               -->
-            </div>
-            <div class="form-group">
-              <label for="topic-pred" class="col-sm-2 control-label">
-                Topic Property:
-              </label>
-              <div class="col-sm-10 "><input type="text" class="form-control"  id="topic-pred" name="topic-pred" size="80"/></div>
-              <!-- TODO:
-               1. optional single value &topic-pred={uri} if present
-               -->
-              <!-- TODO: add description: The property used to link to Topics the extracted text was classified along. If empty
-               <code>fam:topic-reference</code> will be used.
-               -->
-            </div>
-            <div class="form-group">
-              Named Entity Predicates:
-              <label for="pers-ne-pred" class="col-sm-2 control-label">
-                Persons:
-              </label>
-              <div class="col-sm-10 "><input type="text" class="form-control"  id="pers-ne-pred" name="pers-ne-pred" size="80"/></div>
-              <!-- TODO:
-               1. optional single value &pers-ne-pred={uri} if present
-               -->
-              <!-- TODO: add description: The property for extracted Persons. Values will be Literals. If empty
-               <code>fam:preson-ne-reference</code> will be used.
-               -->
-              <label for="org-ne-pred" class="col-sm-2 control-label">
-                Organization:
-              </label>
-              <div class="col-sm-10 "><input type="text" class="form-control"  id="org-ne-pred" name="org-ne-pred" size="80"/></div>
-              <!-- TODO:
-               1. optional single value &org-ne-pred={uri} if present
-               -->
-              <!-- TODO: add description: The property for extracted Persons. Values will be Literals. If empty
-               <code>organization-ne-reference</code> will be used.
-               -->
-              <label for="loc-ne-pred" class="col-sm-2 control-label">
-                Location:
-              </label>
-              <div class="col-sm-10 "><input type="text" class="form-control"  id="loc-ne-pred" name="loc-ne-pred" size="80"/></div>
-              <!-- TODO:
-               1. optional single value &loc-ne-pred={uri} if present
-               -->
-              <!-- TODO: add description: The property for extracted Persons. Values will be Literals. If empty
-               <code>fam:location-ne-reference</code> will be used.
-               -->
-              <label for="misc-ne-pred " class="col-sm-2 control-label">
-                Others:
-              </label>
-              <div class="col-sm-10 "><input type="text" class="form-control"  id="misc-ne-pred " name="misc-ne-pred " size="80"/></div>
-              <!-- TODO:
-               1. optional single value &misc-ne-pred={uri} if present
-               -->
-              <!-- TODO: add description: The property for extracted Persons. Values will be Literals. If empty
-               <code>fam:misc-ne-reference</code> will be used.
-               -->
-              <label for="unk-ne-pred " class="col-sm-2 control-label">
-                Unknown type:
-              </label>
-              <div class="col-sm-10 "><input type="text" class="form-control"  id="unk-ne-pred " name="unk-ne-pred " size="80"/></div>
-              <!-- TODO:
-               1. optional single value &unk-ne-pred={uri} if present
-               -->
-              <!-- TODO: add description: This property is used for Named Entities without type information. This is
-               necessary as some NER tools do not provide type information. Values will be Literals. If empty
-               <code>fam:named-entity-reference</code> will be used.
-               -->
-            </div>
-            <div class="form-group">
-              <label for="topic-pred" class="col-sm-2 control-label">
-                Keyword Property:
-              </label>
-              <div class="col-sm-10 "><input type="text" class="form-control"  id="keyword-pred" name="keyword-pred" size="80"/></div>
-              <!-- TODO:
-               1. optional single value &keyword-pred={uri} if present
-               -->
-              <!-- TODO: add description: Keywords extracted from the literals. Values will be literals. Keywords can be used
-               for search suggestion, tag suggestions ... If empty <code>fam:keyword</code> will be used as default
-               -->
-            </div>
-            <div class="form-group">
-              <label for="sentiment-pred" class="col-sm-2 control-label">
-                Sentiment Property:
-              </label>
-              <div class="col-sm-10 "><input type="text" class="form-control"  id="sentiment-pred" name="sentiment-pred" size="80"/></div>
-              <!-- TODO:
-               1. optional single value &sentiment-pred={uri} if present
-               -->
-              <!-- TODO: add description: The overal sentiment of the literals. The value will be a floating point number
-               in the range [-1 .. +1] where -1 is very negative, 0 represent neutral sentiment and +1 is very positive. 
-               If empty <code>fam:named-entity-reference</code> will be used.
-               -->
-            </div>
-            <div class="form-group">
-                <div class="col-sm-10 col-sm-offset-2">
-                    <button id="generate" class="btn btn-primary">
-                        <span class="glyphicon-button">Generate Transformer</span>
-                    </button>
-
-
-                </div>
-            </div>            
-            <div id="resultDiv">
-                <div class="form-group">
-
-                    <label for="resultValue" class="col-sm-2 control-label">
-                        Transformer URI:
+                <fieldset>
+				<legend>Literal Extractor Properties</legend>
+				<div class="form-group">
+                    <label for="title" class="col-sm-2 control-label">
+                        Custom Name:
                     </label>
-                    <div class="col-sm-10"><input id="resultValue"  class="form-control" name="resultValue" type="text" size="120" /></div>
+                    <div class="col-sm-10 ">
+                        <input type="text" class="form-control" id="title" name="title" size="80" />
+						<span style="color: grey">(e.g. My Literal Extraction Transformer)</span>
+                    </div>
                 </div>
+				<div class="form-group">
+                    <label for="transformer" class="col-sm-2 control-label">
+                        Plain Text Transformer:
+                    </label>
+                    <div class="col-sm-10">
+						<select class="form-control" name="transformer" id="transformer">
+						</select>
+                        <span style="color: grey">(e.g. https://raw.githubusercontent.com/fusepoolP3/p3-dictionary-matcher-transformer/master/src/main/resources/NASA.subjects.skos.xml)</span></div>
+                    <!-- TODO - the best would be an UI element that allows to select a transformer accepting text/plain and outputting any RDF format -->
+                    <!-- TODO: add description: This is the transformer the text extracted from the configured literal predicates is sent to. 
+                         It needs to support <code>text/plain</code> as input and return Fusepool Annotation Model RDF statements as output. 
+                    -->
+                </div>
+                <div class="form-group">
+                    <label for="lang" class="col-sm-2 control-label">
+                        Processed Languages:
+                    </label>
+                    <div class="col-sm-10 ">
+                        <input type="text" class="form-control" id="lang" name="lang" size="80" />
+                    </div>
+                    <!-- TODO: one needs 
+                            1. check if this is empty (or blank) if so do not send a lang parameter
+                            2. split values by ','. If multiple languages are defined add &lang={lang1}&lang={lang2} ... 
+                    -->
+                    <!-- TODO: add description: comma separated list of processed languages. If empty all languages will be processed. 
+                     Lanugages without any language tag will always be processed.-->
+                </div>
+                <div class="form-group">
+                    <label for="lit-pred" class="col-sm-2 control-label">
+                        Literal Properties:
+                    </label>
+                    <div class="col-sm-10 ">
+                        <textarea class="form-control" id="lit-pred" name="lit-pred" size="80" rows="4"></textarea>
+                    </div>
+                    <!-- TODO:
+                     1. change this to a <textarea/>
+                     2. split the value by line break
+                     3. validate that every line is a valid URI
+                     4. send URL as &lit-pred={uri1}&lit-pred={uri2}& ... to the server
+                     5. this is an optional configuration. So if the field is empty or blang do not add a lit-pred value
+                    -->
+                    <!-- TODO: add description: Properties searched for literal values. The Transformer will concatenate literals values 
+                      of all configured properties per languages (meaning that only literals with the same language will be concatenated).
+                    -->
+                </div>
+                <div class="form-group">
+                    <label for="entity-pred" class="col-sm-2 control-label">
+                        Entity Property:
+                    </label>
+                    <div class="col-sm-10 "><input type="text" class="form-control"  id="entity-pred" name="entity-pred" size="80"/></div>
+                    <!-- TODO:
+                     1. optional single value &entity-pred={uri} if present
+                    -->
+                    <!-- TODO: add description: The property used for Linked Entities. If empty
+                        <code>fam:entity-reference</code> will be used.
+                    -->
+                </div>
+                <div class="form-group">
+                    <label for="topic-pred" class="col-sm-2 control-label">
+                        Topic Property:
+                    </label>
+                    <div class="col-sm-10 "><input type="text" class="form-control"  id="topic-pred" name="topic-pred" size="80"/></div>
+                    <!-- TODO:
+                     1. optional single value &topic-pred={uri} if present
+                    -->
+                    <!-- TODO: add description: The property used to link to Topics the extracted text was classified along. If empty
+                     <code>fam:topic-reference</code> will be used.
+                    -->
+                </div>
+				</fieldset>
+				
+                <fieldset>
+				<legend>Named Entity Predicates</legend>
+                <div class="form-group">
+                    <label for="pers-ne-pred" class="col-sm-2 control-label">
+                        Persons:
+                    </label>
+                    <div class="col-sm-10 "><input type="text" class="form-control"  id="pers-ne-pred" name="pers-ne-pred" size="80"/></div>
+                    <!-- TODO:
+                     1. optional single value &pers-ne-pred={uri} if present
+                    -->
+                    <!-- TODO: add description: The property for extracted Persons. Values will be Literals. If empty
+                     <code>fam:preson-ne-reference</code> will be used.
+                    -->
+                </div>
+                <div class="form-group">
+                    <label for="org-ne-pred" class="col-sm-2 control-label">
+                        Organization:
+                    </label>
+                    <div class="col-sm-10 "><input type="text" class="form-control"  id="org-ne-pred" name="org-ne-pred" size="80"/></div>
+                    <!-- TODO:
+                     1. optional single value &org-ne-pred={uri} if present
+                    -->
+                    <!-- TODO: add description: The property for extracted Persons. Values will be Literals. If empty
+                     <code>organization-ne-reference</code> will be used.
+                    -->
+                </div>
+                <div class="form-group">
+                    <label for="loc-ne-pred" class="col-sm-2 control-label">
+                        Location:
+                    </label>
+                    <div class="col-sm-10"><input type="text" class="form-control"  id="loc-ne-pred" name="loc-ne-pred" size="80"/></div>
+                    <!-- TODO:
+                     1. optional single value &loc-ne-pred={uri} if present
+                    -->
+                    <!-- TODO: add description: The property for extracted Persons. Values will be Literals. If empty
+                     <code>fam:location-ne-reference</code> will be used.
+                    -->
+                </div>
+                <div class="form-group">
+                    <label for="misc-ne-pred" class="col-sm-2 control-label">
+                        Others:
+                    </label>
+                    <div class="col-sm-10 "><input type="text" class="form-control"  id="misc-ne-pred" name="misc-ne-pred" size="80"/></div>
+                    <!-- TODO:
+                     1. optional single value &misc-ne-pred={uri} if present
+                    -->
+                    <!-- TODO: add description: The property for extracted Persons. Values will be Literals. If empty
+                     <code>fam:misc-ne-reference</code> will be used.
+                    -->
+                </div>
+                <div class="form-group">
+                    <label for="unk-ne-pred" class="col-sm-2 control-label">
+                        Unknown type:
+                    </label>
+                    <div class="col-sm-10"><input type="text" class="form-control"  id="unk-ne-pred" name="unk-ne-pred" size="80"/></div>
+                    <!-- TODO:
+                     1. optional single value &unk-ne-pred={uri} if present
+                    -->
+                    <!-- TODO: add description: This property is used for Named Entities without type information. This is
+                     necessary as some NER tools do not provide type information. Values will be Literals. If empty
+                     <code>fam:named-entity-reference</code> will be used.
+                    -->
+                </div>
+				</fieldset>
+				
+				<fieldset>
+				<legend>Other Properties</legend>
+                <div class="form-group">
+                    <label for="topic-pred" class="col-sm-2 control-label">
+                        Keyword Property:
+                    </label>
+                    <div class="col-sm-10"><input type="text" class="form-control"  id="keyword-pred" name="keyword-pred" size="80"/></div>
+                    <!-- TODO:
+                     1. optional single value &keyword-pred={uri} if present
+                    -->
+                    <!-- TODO: add description: Keywords extracted from the literals. Values will be literals. Keywords can be used
+                     for search suggestion, tag suggestions ... If empty <code>fam:keyword</code> will be used as default
+                    -->
+                </div>
+                <div class="form-group">
+                    <label for="sentiment-pred" class="col-sm-2 control-label">
+                        Sentiment Property:
+                    </label>
+                    <div class="col-sm-10"><input type="text" class="form-control"  id="sentiment-pred" name="sentiment-pred" size="80"/></div>
+                    <!-- TODO:
+                     1. optional single value &sentiment-pred={uri} if present
+                    -->
+                    <!-- TODO: add description: The overal sentiment of the literals. The value will be a floating point number
+                     in the range [-1 .. +1] where -1 is very negative, 0 represent neutral sentiment and +1 is very positive. 
+                     If empty <code>fam:named-entity-reference</code> will be used.
+                    -->
+                </div>
+				</fieldset>
+				
+				<fieldset>
+				<legend></legend>
                 <div class="form-group">
                     <div class="col-sm-10 col-sm-offset-2">
-
-                    <!--<label for="resultValue" class="col-sm-2 control-label">-->
-                        <button id="register" class="btn btn-primary">
-                            <span class="glyphicon-button">Register </span>
-
-
+                        <button id="generate" class="btn btn-primary">
+                            <span class="glyphicon-button">Generate Transformer</span>
                         </button>
-                        in transformer registry at:
-                    <!--</label>-->
-</div>
+                    </div>
+                </div>            
+                <div id="resultDiv">
+                    <div class="form-group">
+
+                        <label for="resultValue" class="col-sm-2 control-label">
+                            Transformer URI:
+                        </label>
+                        <div class="col-sm-10"><input id="resultValue"  class="form-control" name="resultValue" type="text" size="120" /></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-10 col-sm-offset-2">
+                            <!--<label for="resultValue" class="col-sm-2 control-label">-->
+                            <button id="register" class="btn btn-primary">
+                                <span class="glyphicon-button">Register </span>
+                            </button>
+                            in transformer registry at:
+                            <!--</label>-->
+                        </div>
                     </div>
 
-                <div class="form-group">
+                    <div class="form-group">
+                        <div class="col-sm-10 col-sm-offset-2"><input type="text"  class="form-control" id="transformerRegistry" size="80"/></div>
+                    </div>
 
-                    <div class="col-sm-10 col-sm-offset-2"><input type="text"  class="form-control" id="transformerRegistry" size="80"/></div>
                 </div>
-                
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <div class="alert alert-danger" style="margin-bottom: 0px;display:none" role="alert" id="add-alert" ></div>
-                    <div class="alert alert-success" style="margin-bottom: 0px;display:none" role="alert" id="add-success"></div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <div class="alert alert-danger" style="margin-bottom: 0px;display:none" role="alert" id="add-alert" ></div>
+                        <div class="alert alert-success" style="margin-bottom: 0px;display:none" role="alert" id="add-success"></div>
+                    </div>
                 </div>
-            </div>    
+				</fieldset>
             </div>
         </div>
 
@@ -216,8 +246,8 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <!-- <script src="bootstrap/js/bootstrap.min.js"></script> -->
         <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-				<script type="text/javascript" src="rdfstore/rdfstore.js"></script>
-				<script type="text/javascript" src="platformjs/p3-platform-js.js"></script>
+        <script type="text/javascript" src="rdfstore/rdfstore.js"></script>
+        <script type="text/javascript" src="platformjs/p3-platform-js.js"></script>
         <script type="text/javascript" src="js/utils.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
     </body>

@@ -94,7 +94,7 @@ function closeDialog(id) {
     return false;
 }
 
-function createAlertDialog() {
+function createAlertDialog(bodyText) {
     $('<div id="alertDialog" title="Error" style="padding-left: 1px; padding-right: 1px; padding-bottom: 0px;"></div>').appendTo('body')
         .html(
                     '<div class="col-sm-12">'
@@ -102,7 +102,9 @@ function createAlertDialog() {
                             + '<img src="images/exclamation128.png" height="40" width="40" style="margin: 0 auto;">'
                         + '</div>'
                         + '<div class="col-sm-10 text-left" style="padding-left: 20px; padding-right: 0px;">'
-                            + '<p id="alertDialogErrorText">Error...</p>'
+                            + '<p>'
+                                + bodyText
+                            + '</p>'
                         + '</div>'
                     + '</div>'
                     + '<div class="col-sm-12" >'
@@ -114,12 +116,13 @@ function createAlertDialog() {
                             + '</button>'
                     + '</div>'
       ).dialog({
-          modal: true, 
-		  width: 300, 
-		  resizable: false, 
-		  autoOpen: false,
+          modal: true, zIndex: 10000, autoOpen: true,
+		  width: 300, resizable: false, 
           position: { my: "center", at: "center", collision: 'fit' },
-          show: {
+          close: function (event, ui) {
+              $(this).remove();
+          },
+		  show: {
               duration: 300
           },
           hide: {
@@ -191,4 +194,9 @@ function createConfirmDialog(titleText, bodyText, confrimFunctionText) {
               duration: 300
           }
       }).dialog("widget").removeClass('ui-widget');
+}
+
+function validateURL(textval) {
+    var urlregex = /^(https?|ftp):\/\/([a-zA-Z0-9.-]+(:[a-zA-Z0-9.&%$-]+)*@)*((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(:[0-9]+)*(\/($|[a-zA-Z0-9.,?'\\+&%$#=~_-]+))*$/;
+    return urlregex.test(textval);
 }
