@@ -15,7 +15,7 @@ $(document).ready(function () {
 	}
 	
     function transformerUri() {
-		var transformer = encodeURIComponent($('#transformer').find(":selected").text());
+		var transformer = encodeURIComponent($('#transformer').find(":selected").val());
 		var processedLanguages = $.trim($("#lang").val());
 		var literalProperties = $("#lit-pred").val();
 		var entityProperty = $("#entity-pred").val();
@@ -181,6 +181,8 @@ function saveContent(container, data, headers, contentType, saveSuccess, saveFai
 }
 
 function getTransformers(){
+	console.log("asdasdasdasd");
+	console.log(sparqlEndpoint);
 	var query = 'PREFIX dc: <http://purl.org/dc/terms/> '
             + 'PREFIX trldpc: <http://vocab.fusepool.info/trldpc#> '
             + 'PREFIX ldp: <http://www.w3.org/ns/ldp#> '
