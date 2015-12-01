@@ -15,7 +15,7 @@ $(document).ready(function () {
 	}
 	
     function transformerUri() {
-		var transformer = encodeURIComponent($('#transformer').find(":selected").val());
+		var transformer = $('#transformer').find(":selected").val();
 		var processedLanguages = $.trim($("#lang").val());
 		var literalProperties = $("#lit-pred").val();
 		var entityProperty = $("#entity-pred").val();
