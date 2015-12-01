@@ -12,7 +12,6 @@
       <url>https://github.com/fusepoolp3/p3-literal-extraction-factory-gui</url>
       <connection>scm:git:https://github.com/fusepoolp3/p3-literal-extraction-factory-gui</connection>
       <developerConnection>scm:git:git@github.com:fusepoolp3/p3-literal-extraction-factory-gui.git</developerConnection>
-      <tag>literal-extraction-transformer-1.1.0</tag>
     </scm>
 
     <properties>
@@ -91,7 +90,7 @@
               <artifactId>maven-release-plugin</artifactId>
               <version>2.4</version>
               <configuration>
-                <localCheckout>true</localCheckout>
+                <!-- localCheckout>true</localCheckout -->
                 <pushChanges>false</pushChanges>
               </configuration>
             </plugin>
