@@ -211,10 +211,19 @@
 
         <!-- ================================================== -->
         <!-- JavaScript placed at the end of the document so the pages load faster -->
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <!-- <script src="bootstrap/js/bootstrap.min.js"></script> -->
-        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="rdfstore/rdfstore.js"></script>
+
+        <script src="//cdn.rawgit.com/rdf2h/rdf2h/v0.2.1/dist/rdf-ext.js"></script>
+        <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script src="//cdn.rawgit.com/retog/rdf-store-ldp-browser/v0.3.0-rc2f/dist/rdf-store-ldp.js"></script>
+        <script src="//cdn.rawgit.com/retog/clownface-browser/v0.3.0-rc2/dist/clownface.js"></script>
+        <script>
+          <!-- limited backward compatibility with rdf-ext 0.2 for p3-platform-js -->
+          rdf.parseTurtle = function(turtle, callback) {
+                          LdpStore.parsers.findParsers("text/turtle")[0].parse(turtle, callback)
+                        }
+                        rdf.cf = Clownface
+        </script>
         <script type="text/javascript" src="platformjs/p3-platform-js.js"></script>
         <script type="text/javascript" src="js/utils.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
