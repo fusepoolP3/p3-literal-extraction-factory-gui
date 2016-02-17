@@ -9,7 +9,7 @@
     <groupId>eu.fusepool.p3</groupId>
     <artifactId>p3-literal-extraction-transformer-factory-gui</artifactId>
     <name>Fusepool P3 Platform: Literal Extraction Transformer Factory GUI</name>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
     <packaging>jar</packaging>
     
     
