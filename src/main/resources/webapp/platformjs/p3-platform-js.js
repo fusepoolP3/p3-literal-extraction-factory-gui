@@ -1,14 +1,13 @@
-
 function P3Platform() {
-	if (typeof rdfstore === 'undefined' || typeof jQuery === 'undefined') {
-			console.error("You must include jQuery and RDFStore JS libraries.");
+	if (typeof rdf === 'undefined' || typeof jQuery === 'undefined') {
+		console.error("You must include jQuery and RDF-Ext JS libraries.");
 	}
 }
 
 P3Platform.prototype.getPlatform = function (platformURI) {
 
 	/* ************************* Platform ************************* */
-	function Platform(URI, title, comment, label, ldpRoot, sparqlEndpoint, userInteractionRequestRegistry, transformerFactoryRegistry, transformerRegistry, dashboardConfigRegistry) {
+	function Platform(URI, title, comment, label, ldpRoot, sparqlEndpoint, userInteractionRequestRegistry, transformerFactoryRegistry, transformerRegistry, dashboardConfigRegistry, pipelineConfigRegistry) {
 		this.URI = URI;
 		this.title = title;
 		this.comment = comment;
@@ -19,6 +18,7 @@ P3Platform.prototype.getPlatform = function (platformURI) {
 		this.transformerFactoryRegistry = transformerFactoryRegistry;
 		this.transformerRegistry = transformerRegistry;
 		this.dashboardConfigRegistry = dashboardConfigRegistry;
+		this.pipelineConfigRegistry = pipelineConfigRegistry;
 	}
 	Platform.prototype.getPlatformURI = function () { return this.URI; };
 	Platform.prototype.getLdpRoot = function () { return this.ldpRoot; };
@@ -39,6 +39,7 @@ P3Platform.prototype.getPlatform = function (platformURI) {
 	};
 	Platform.prototype.getTransformerRegistryURI = function () { return this.transformerRegistry.URI; };
 	Platform.prototype.getDashboardConfigRegistryURI = function () { return this.dashboardConfigRegistry; };
+	Platform.prototype.getPipelineConfigRegistryURI = function () { return this.pipelineConfigRegistry; };
 	
 	/* ************************* TransformerRegistry ************************* */
 	function TransformerRegistry(transformerRegistryURI) {
@@ -58,15 +59,17 @@ P3Platform.prototype.getPlatform = function (platformURI) {
 
 				var data = '@prefix dcterms: <http://purl.org/dc/terms/> . '
 								+ '@prefix trldpc: <http://vocab.fusepool.info/trldpc#> . '
-								+ '@prefix ldp: <http://www.w3.org/ns/ldp#> . '
-								+ '<> a ldp:Container, ldp:BasicContainer, trldpc:TransformerRegistration; '
+								+ '<> a trldpc:TransformerRegistration; '
 								+ 'trldpc:transformer <' + transformerURI + '>; '
 								+ descriptionProp
 								+ 'dcterms:title "' + title + '"@en . ';
 
 				$.ajax({
 						type: 'POST',
-						headers: { 'Content-Type': 'text/turtle' },
+						headers: {
+							'Content-Type': 'text/turtle',
+							'Slug': title
+						},
 						url: main.URI,
 						data: data,
 						async: true
@@ -100,15 +103,17 @@ P3Platform.prototype.getPlatform = function (platformURI) {
 
 				var data = '@prefix dcterms: <http://purl.org/dc/terms/> . '
 								+ '@prefix tfrldpc: <http://vocab.fusepool.info/tfrldpc#> . '
-								+ '@prefix ldp: <http://www.w3.org/ns/ldp#> . '
-								+ '<> a ldp:Container, ldp:BasicContainer, tfrldpc:TransformerFactoryRegistration; '
+								+ '<> a tfrldpc:TransformerFactoryRegistration; '
 								+ 'tfrldpc:transformerFactory <' + transformerFactoryURI + '>; '
 								+ descriptionProp
 								+ 'dcterms:title "' + title + '"@en . ';
 
 				$.ajax({
 						type: 'POST',
-						headers: { 'Content-Type': 'text/turtle' },
+						headers: {
+							'Content-Type': 'text/turtle',
+							'Slug': title
+						},
 						url: main.URI,
 						data: data,
 						async: true
@@ -123,60 +128,41 @@ P3Platform.prototype.getPlatform = function (platformURI) {
 			}
 		});
 	};
-
-	var main = this;
-  return new Promise(function (resolve, reject) {
+	
+	var main = this;	
+	return new Promise(function (resolve, reject) {
 		
-		var ajaxRequest = jQuery.ajax({ type: "GET", url: platformURI, async: true });
+		var ajaxRequest = jQuery.ajax({ type: "GET", url: platformURI, headers: {
+                              'Accept': 'text/turtle'
+    			}, async: true });
 		
 		ajaxRequest.done(function (response, textStatus, responseObj) {
-			var configStore = rdfstore.create();
-			configStore.load('text/turtle', response, function (success) {
-				if (success) {
-					var query = "PREFIX dcterms: <http://purl.org/dc/elements/1.1/> " +
-											"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> " +
-											"PREFIX fp3: <http://vocab.fusepool.info/fp3#> " +
-											"SELECT * { " +
-											" ?s dcterms:title ?title " +
-											" OPTIONAL { ?s rdfs:comment ?comment } " +
-											" OPTIONAL { ?s rdfs:label ?label } " +
-											" OPTIONAL { ?s fp3:ldpRoot ?ldpRoot } " +
-											" OPTIONAL { ?s fp3:sparqlEndpoint ?sparqlEndpoint } " +
-											" OPTIONAL { ?s fp3:userInteractionRequestRegistry ?userInteractionRequestRegistry } " +
-											" OPTIONAL { ?s fp3:transformerFactoryRegistry ?transformerFactoryRegistry } " +
-											" OPTIONAL { ?s fp3:transformerRegistry ?transformerRegistry } " +
-											" OPTIONAL { ?s fp3:dashboardConfigRegistry ?dashboardConfigRegistry } " +
-											"}";
-					
-					configStore.execute(query, function (success, res) {
-						if (success) {
-							var title = res[0].title.value;
-							var comment = (isEmpty(res[0].comment) ? "" : res[0].comment.value);
-							var label = (isEmpty(res[0].label) ? "" : res[0].label.value);
-							var ldpRoot = (isEmpty(res[0].ldpRoot) ? "" : res[0].ldpRoot.value);
-							var sparqlEndpoint = (isEmpty(res[0].sparqlEndpoint) ? "" : res[0].sparqlEndpoint.value);
-							var userInteractionRequestRegistry = (isEmpty(res[0].userInteractionRequestRegistry) ? "" : res[0].userInteractionRequestRegistry.value);
-							var transformerFactoryRegistry = (isEmpty(res[0].transformerFactoryRegistry) ? "" : res[0].transformerFactoryRegistry.value);
-							var transformerRegistry = (isEmpty(res[0].transformerRegistry) ? "" : res[0].transformerRegistry.value);
-							var dashboardConfigRegistry = (isEmpty(res[0].dashboardConfigRegistry) ? "" : res[0].dashboardConfigRegistry.value);
-							
-							var transformerRegistryObj = new TransformerRegistry(transformerRegistry);
-							var transformerFactoryRegistryObj = new TransformerFactoryRegistry(transformerFactoryRegistry);
-							
-							var platform = new Platform(platformURI, title, comment, label, ldpRoot, sparqlEndpoint,
-																				userInteractionRequestRegistry, transformerFactoryRegistryObj,
-																				transformerRegistryObj, dashboardConfigRegistry);
-							
-							resolve(platform);
-						}
-						else {
-							reject(Error("RDFStore issue during executing a query."));
-						}
-					});
-				}
-				else {
-					reject(Error("RDFStore issue during loading result to store."));
-				}
+			rdf.parseTurtle(response, function (s, graph) {
+				
+				var platformConfig = rdf.cf.Graph(graph);
+				
+				var pfx = {  rdfs: "http://www.w3.org/2000/01/rdf-schema#", dcElements: "http://purl.org/dc/elements/1.1/", fp3: "http://vocab.fusepool.info/fp3#" };
+			
+				var title = platformConfig.node(platformURI).out(pfx.dcElements + "title").literal().shift();
+				var comment = platformConfig.node(platformURI).out(pfx.rdfs + "comment").literal().shift();
+				var label = platformConfig.node(platformURI).out(pfx.rdfs + "label").literal().shift();
+				var ldpRoot = platformConfig.node(platformURI).out(pfx.fp3 + "ldpRoot").literal().shift();
+				var sparqlEndpoint = platformConfig.node(platformURI).out(pfx.fp3 + "sparqlEndpoint").literal().shift();
+				var userInteractionRequestRegistry = platformConfig.node(platformURI).out(pfx.fp3 + "userInteractionRequestRegistry").literal().shift();
+				var transformerFactoryRegistry = platformConfig.node(platformURI).out(pfx.fp3 + "transformerFactoryRegistry").literal().shift();
+				var transformerRegistry = platformConfig.node(platformURI).out(pfx.fp3 + "transformerRegistry").literal().shift();
+				var dashboardConfigRegistry = platformConfig.node(platformURI).out(pfx.fp3 + "dashboardConfigRegistry").literal().shift();
+				var pipelineConfigRegistry = platformConfig.node(platformURI).out(pfx.fp3 + "pipelineConfigRegistry").literal().shift();
+				
+				var transformerRegistryObj = new TransformerRegistry(transformerRegistry);
+				var transformerFactoryRegistryObj = new TransformerFactoryRegistry(transformerFactoryRegistry);
+				
+				var platform = new Platform(platformURI, title, comment, label, ldpRoot, sparqlEndpoint,
+																	userInteractionRequestRegistry, transformerFactoryRegistryObj,
+																	transformerRegistryObj, dashboardConfigRegistry, pipelineConfigRegistry);
+				
+				resolve(platform);
+			 
 			});
 		});
 		ajaxRequest.fail(function (responseObj, textStatus, response) {
